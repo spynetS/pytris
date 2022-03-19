@@ -25,6 +25,7 @@ class Shape:
             self.shape = np.rot90(m)
             self.shape = np.rot90(m)
             self.shape = np.rot90(m)
+
     def copy(self):
         temps = Shape(self.screen)
         temps.x = self.x
@@ -33,6 +34,7 @@ class Shape:
         return temps
 
     def drawShape(self):
+        self.screen.addstr(self.y,self.x,"x")
         y = 0
         i = 0
         self.points = []
@@ -40,7 +42,7 @@ class Shape:
             for b in row:
                 if(b==1):
                     self.points.append([i+self.x,y+self.y])
-                    self.screen.addstr(y+self.y,i+self.x,str(self.points))
+                    self.screen.addstr(y+self.y,i+self.x,"#")
                 i+=1
             i=0
             y+=1

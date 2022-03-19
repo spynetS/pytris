@@ -14,6 +14,7 @@ from Shape import Shape
 playing = True
 shape1 = Shape("")
 fallenshapes = []
+height = 10
 
 def inputs(screen):
     global playing
@@ -36,13 +37,10 @@ def inputs(screen):
             break
 
 def collide():
-    for shape in fallenshapes:
-        for p1 in shape1.points:
-            for p2 in shape.points:
-                for x in p1:
-                    for y in p2:
-                        if(x[0]==y[0] and (x[1]+1) == y[1]):
-                            return True
+    global height
+    for p in shape1.points:
+        if(p[0]+1 >= height):
+            pass
     return False
 
 
@@ -58,10 +56,9 @@ while(playing):
     shape1.drawShape()
     for shape in fallenshapes:
         shape.drawShape()
-    if (collide()):
+
+    if(collide()==False):
         shape1.y+1
-    if(shape1.y<6):
-        shape1.y+=1
     else:
         tempshape = shape1.copy()
         fallenshapes.append(tempshape)
