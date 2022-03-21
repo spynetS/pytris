@@ -1,5 +1,6 @@
 import numpy as np
 import curses
+from shapes import getRandomShape
 
 class Shape:
 
@@ -17,6 +18,9 @@ class Shape:
     y = 2
     def __init__(self,screen):
         self.screen = screen
+        self.shape = getRandomShape()[0]
+
+
     def rotate(self,dire):
         m = np.array(self.shape,int)
         if(dire==1):
@@ -34,7 +38,6 @@ class Shape:
         return temps
 
     def drawShape(self):
-        self.screen.addstr(self.y,self.x,"x")
         y = 0
         i = 0
         self.points = []
@@ -42,7 +45,7 @@ class Shape:
             for b in row:
                 if(b==1):
                     self.points.append([i+self.x,y+self.y])
-                    self.screen.addstr(y+self.y,i+self.x,"#")
+                    self.screen.addstr(y+self.y,i+self.x,"*")
                 i+=1
             i=0
             y+=1
