@@ -12,6 +12,7 @@ class Main:
     height = 15
     screen = curses.initscr()
     fallenshapes = []
+    fallenshape = []
     playing = True
     # currentShape = Shape()
 
@@ -37,6 +38,9 @@ class Main:
     def draw(self): #draw everyting
         self.drawGround()
         self.drawWalls()
+        for x in self.fallenshape:
+            self.screen.addstr(x[1],x[0],"U")
+
         for shape in self.fallenshapes:
             shape.drawShape()
         self.currentShape.drawShape()
@@ -46,16 +50,36 @@ class Main:
         for p in self.currentShape.points:
             if(p[1]+1 >= self.height):
                 return True
-            for shape in self.fallenshapes:
-                for p1 in shape.points:
-                    if(p[0]==p1[0] and p1[1]==p[1]+1):
-                        return True
+            for p1 in self.fallenshape:
+                if(p[0]==p1[0] and p1[1]==p[1]+1):
+                   return True
 
         return False
 
-    def land():
-        tempshape = self.currentShape.copy()
-        self.fallenshapes.append(tempshape)
+    def checkRow(self):
+        count = 0
+        for y in range(self.height):
+            for p in self.fallenshape:
+                if(p[1]==y):count+=1
+                if(count == self.width+3):
+                    temp = []
+                    for p1 in self.fallenshape:
+                        self.screen.addstr(0,0,str(y))
+                        self.screen.refresh()
+                        if(p1[1]>y):temp.append(p1)
+                        if(p1[1]<y):temp.append([p1[0],p1[1]+1])
+                    self.fallenshape = temp
+
+
+
+    def land(self):
+        #tempshape = self.currentShape.copy()
+        shape = self.currentShape.shape
+        for r in self.currentShape.points:
+            if (len(self.fallenshape)<r[1]):
+                self.fallenshape.append(r)
+            else:
+                self.fallenshape.append(r)
         self.currentShape = Shape(self.screen)
 
 
@@ -68,6 +92,7 @@ class Main:
                 self.currentShape.y+=1
             else:
                 self.land()
+            self.checkRow()
             time.sleep(0.5)
 
 def inputs(main):
