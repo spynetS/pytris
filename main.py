@@ -55,8 +55,15 @@ def drawGround():
     for x in range(width):
         screen.addstr(height,x,"#")
 
-screen = curses.initscr()
+def drawWalls():
+    global screen
+    global height
+    global width
+    for y in range(height):
+        screen.addstr(y,0,"#")
 
+
+screen = curses.initscr()
 
 x = threading.Thread(target=inputs,args=(screen,))
 x.start()
@@ -66,6 +73,7 @@ shape1 = Shape(screen)
 while(playing):
     screen.erase()
     drawGround()
+    drawWalls()
     shape1.drawShape()
     for shape in fallenshapes:
         shape.drawShape()
