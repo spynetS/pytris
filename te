@@ -1,0 +1,7 @@
+when a piece lands on the we add all the dots 
+in the same y cordinate to a array then if another
+piece lands on the same row we just updates the row
+with the new dots
+
+this makes it very easy to remove rows later
+
